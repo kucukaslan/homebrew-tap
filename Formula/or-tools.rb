@@ -24,12 +24,6 @@ class OrTools < Formula
   depends_on "scip"
   uses_from_macos "zlib"
 
-  # Add missing `#include`s to fix incompatibility with `abseil` 20240722.0.
-  # https://github.com/google/or-tools/pull/4339
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/bb1af4bcb2ac8b2af4de4411d1ce8a6876ed9c15/or-tools/abseil-vlog-is-on.patch"
-    sha256 "0f8f28e7363a36c6bafb9b60dc6da880b39d5b56d8ead350f27c8cb1e275f6b6"
-  end
 
   def install
     # This appears to be a precompiled binary distribution
