@@ -32,7 +32,14 @@ class OrTools < Formula
   end
 
   test do
-    # Test that the or-tools library can be imported in Python
-    system "python3", "-c", "import ortools; print('OR-Tools imported successfully')"
+    (testpath/"test.cpp").write <<~EOS
+      #include "ortools/linear_solver/linear_solver.h"
+      int main() {
+        operations_research::MPSolver solver("test", operations_research::MPSolver::GLOP_LINEAR_PROGRAMMING);
+        return 0;
+      }
+    EOS
+    system ENV.cxx, "test.cpp", "-std=c++17", "-I#{include}", "-L#{lib}", "-lortools", "-o", "test"
+    system "./test"
   end
 end
