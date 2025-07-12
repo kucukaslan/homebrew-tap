@@ -1,34 +1,31 @@
+# Documentation: https://docs.brew.sh/Formula-Cookbook
+#                https://rubydoc.brew.sh/Formula
+# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class OrTools < Formula
-  desc "Google's Operations Research tools (custom build)"
+  desc "Google's Operations Research tools:"
   homepage "https://developers.google.com/optimization/"
   url "https://github.com/kucukaslan/or-tools/releases/download/v9.15-alpha15/ortools-arm64-macos-Make-849de053bdf664b2f77f3e936a318715fdd5c1fb.tar.gz"
   sha256 "26f65ed6db56fd6022cee4e1d63dcaf456b231d3b0f49d50c4cd7fc876811f11"
   license "Apache-2.0"
+
   version "9.15-alpha15"
 
   # This formula conflicts with the or-tools formula from homebrew-core
   conflicts_with "or-tools", because: "this is a custom build that replaces the core formula"
 
-  depends_on "cmake" => [:build, :test]
-  depends_on "pkgconf" => [:build, :test]
-  depends_on "abseil"
-  depends_on "cbc"
-  depends_on "cgl"
-  depends_on "clp"
-  depends_on "coinutils"
-  depends_on "eigen"
-  depends_on "openblas"
-  depends_on "osi"
-  depends_on "protobuf"
-  depends_on "re2"
-  depends_on "scip"
-  uses_from_macos "zlib"
+  # depends_on "cmake" => :build
 
+  # Additional dependency
+  # resource "" do
+  #   url ""
+  #   sha256 ""
+  # end
 
   def install
-    # This appears to be a precompiled binary distribution
-    # Copy all contents to the prefix
-    prefix.install Dir["*"]
+    # Remove unrecognized options if they cause configure to fail
+    # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
+    system "./configure", "--disable-silent-rules", *std_configure_args
+    # system "cmake", "-S", ".", "-B", "build", *std_cmake_args
   end
 
   test do
