@@ -6,9 +6,6 @@ class Todo < Formula
   version "0.4.2"
   license "GPL-3.0-or-later"
 
-  # This is a binary release, no compilation needed
-  bottle :unneeded
-
   on_macos do
     on_intel do
       url "https://github.com/kucukaslan/todo/releases/download/v0.4.2/todo_0.4.2_Darwin_x86_64.tar.gz"
